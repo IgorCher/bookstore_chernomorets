@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BookDaoImpl implements BookDao {
     public static final String URL = "jdbc:postgresql://localhost:5432/bookstore_bh";
+    //public static final String URL = "postgres://rzzdpsiz:g3Vy8Dcr9ybGq5TReLubA2XQkAP3mYir@horton.db.elephantsql.com/rzzdpsiz";
     public static final String LOGIN = "postgres";
     public static final String PASSWORD = "root";
     public static final String FIND_ALL = "SELECT * FROM books";
