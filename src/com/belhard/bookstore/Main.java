@@ -25,8 +25,6 @@ public class Main {
             switch (action) {
                 case "all": {
 
-                    //list of all books
-
                     List<Book> books = bookDao.findAll();
                     books.forEach(System.out::println);
                     System.out.println();
@@ -34,7 +32,6 @@ public class Main {
                 }
                 case "get": {
 
-                    //find book by id
 
                     System.out.println("Print id of the book");
                     long id = scan.nextLong();
@@ -46,7 +43,6 @@ public class Main {
                 }
                 case "delete": {
 
-                    //delete book by id
 
                     System.out.println("Print id of the book you want to delete");
                     long id = scan.nextLong();
@@ -60,7 +56,6 @@ public class Main {
                 }
                 case "exit": {
 
-                    //exit the program
 
                     continue;
                 }
