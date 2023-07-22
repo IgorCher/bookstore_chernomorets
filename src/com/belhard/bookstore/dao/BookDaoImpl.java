@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
-    public static final String URL = "jdbc:postgresql://localhost:5432/bookstore_bh";
-    //public static final String URL = "postgres://rzzdpsiz:g3Vy8Dcr9ybGq5TReLubA2XQkAP3mYir@horton.db.elephantsql.com/rzzdpsiz";
-    public static final String LOGIN = "postgres";
-    public static final String PASSWORD = "root";
-    public static final String FIND_ALL = "SELECT * FROM books";
-    public static final String FIND_BY_ID = "SELECT * FROM books WHERE id = ?";
-    public static final String FIND_BY_AUTHOR = "SELECT * FROM books WHERE author = ?";
-    public static final String FIND_BY_ISBN = "SELECT * FROM books WHERE isbn = ?";
-    public static final String CREATE = "INSERT INTO books (author, name, year, pages, isbn) Values (?, ?, ?, ?, ?)";
-    public static final String UPDATE = "UPDATE books SET author = ?, name = ?, year = ?, pages = ?, isbn = ? WHERE id = ?";
-    public static final String DELETE = "DELETE FROM books WHERE id = ?";
+    private final String URL = DatabaseProperties.getUrl();
+    private static final String LOGIN = DatabaseProperties.getLogin();
+    private static final String PASSWORD = DatabaseProperties.getPassword();
+
+    private static final String FIND_ALL = "SELECT * FROM books";
+    private static final String FIND_BY_ID = "SELECT * FROM books WHERE id = ?";
+    private static final String FIND_BY_AUTHOR = "SELECT * FROM books WHERE author = ?";
+    private static final String FIND_BY_ISBN = "SELECT * FROM books WHERE isbn = ?";
+    private static final String CREATE = "INSERT INTO books (author, name, year, pages, isbn) Values (?, ?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE books SET author = ?, name = ?, year = ?, pages = ?, isbn = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM books WHERE id = ?";
+
 
 
     public List<Book> findAll() {
