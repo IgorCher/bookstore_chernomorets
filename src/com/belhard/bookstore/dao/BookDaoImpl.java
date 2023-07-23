@@ -11,12 +11,12 @@ public class BookDaoImpl implements BookDao {
     private static final String LOGIN = DatabaseProperties.getLogin();
     private static final String PASSWORD = DatabaseProperties.getPassword();
 
-    private static final String FIND_ALL = "SELECT * FROM books";
-    private static final String FIND_BY_ID = "SELECT * FROM books WHERE id = ?";
-    private static final String FIND_BY_AUTHOR = "SELECT * FROM books WHERE author = ?";
-    private static final String FIND_BY_ISBN = "SELECT * FROM books WHERE isbn = ?";
-    private static final String CREATE = "INSERT INTO books (author, name, year, pages, isbn) Values (?, ?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE books SET author = ?, name = ?, year = ?, pages = ?, isbn = ? WHERE id = ?";
+    private static final String FIND_ALL = "SELECT * FROM books JOIN cover_types c ON books.cover_type_id = c.id";
+    private static final String FIND_BY_ID = "SELECT * FROM books JOIN cover_types c ON books.cover_type_id = c.id WHERE books.id = ?";
+    private static final String FIND_BY_AUTHOR = "SELECT * FROM books JOIN cover_types c ON books.cover_type_id = c.id WHERE books.author = ?";
+    private static final String FIND_BY_ISBN = "SELECT * FROM books JOIN cover_types c ON books.cover_type_id = c.id WHERE books.isbn = ?";
+    private static final String CREATE = "INSERT INTO books (author, title, year, price, pages, isbn, cover_type_id) Values (?, ?, ?, ?, ?, ?, (SELECT id FROM cover_types WHERE cover_type = ?))";
+    private static final String UPDATE = "UPDATE books SET author = ?, title = ?, year = ?, price = ?, pages = ?, isbn = ?, cover_type_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
 
 
@@ -86,10 +86,12 @@ public class BookDaoImpl implements BookDao {
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, book.getAuthor());
-            preparedStatement.setString(2, book.getName());
+            preparedStatement.setString(2, book.getTitle());
             preparedStatement.setString(3, book.getYear());
-            preparedStatement.setInt(4, book.getPages());
-            preparedStatement.setString(5, book.getIsbn());
+            preparedStatement.setDouble(4, book.getPrice());
+            preparedStatement.setInt(5, book.getPages());
+            preparedStatement.setString(6, book.getIsbn());
+            preparedStatement.setString(7, book.getCover().toString());
 
             preparedStatement.executeUpdate();
 
@@ -111,7 +113,7 @@ public class BookDaoImpl implements BookDao {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
 
             preparedStatement.setString(1, book.getAuthor());
-            preparedStatement.setString(2, book.getName());
+            preparedStatement.setString(2, book.getTitle());
             preparedStatement.setString(3, book.getYear());
             preparedStatement.setInt(4, book.getPages());
             preparedStatement.setString(5, book.getIsbn());
@@ -145,11 +147,14 @@ public class BookDaoImpl implements BookDao {
     public static Book mapRow(ResultSet resultSet) throws SQLException {
         Book book = new Book();
         book.setId(resultSet.getLong("id"));
-        book.setName(resultSet.getString("name"));
+        book.setTitle(resultSet.getString("title"));
         book.setAuthor(resultSet.getString("author"));
         book.setYear(resultSet.getString("year"));
+        book.setPrice(resultSet.getDouble("price"));
         book.setIsbn(resultSet.getString("isbn"));
         book.setPages(resultSet.getInt("pages"));
+        String coverRaw = resultSet.getString("cover_type");
+        book.setCover(Book.Cover.valueOf(coverRaw));
         return book;
     }
 }

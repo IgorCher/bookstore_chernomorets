@@ -5,11 +5,36 @@ import java.util.Objects;
 public class Book {
 
     private long id;
-    private String name;
+    private String title;
     private String author;
     private String year;
+    private double price;
     private int pages;
     private String isbn;
+
+    private Cover cover;
+
+    public enum Cover{
+        HARD,
+        SOFT,
+        OTHER
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
 
     public String getAuthor() {
         return author;
@@ -35,12 +60,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getYear() {
@@ -64,23 +89,25 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return pages == book.pages && Objects.equals(author, book.author) && Objects.equals(isbn, book.isbn) && Objects.equals(id, book.id) && Objects.equals(name, book.name) && Objects.equals(year, book.year);
+        return pages == book.pages && Objects.equals(author, book.author) && Objects.equals(isbn, book.isbn) && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(year, book.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(author, isbn, id, name, year, pages);
+        return Objects.hash(author, isbn, id, title, year, pages);
     }
 
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", year='" + year + '\'' +
+                ", price=" + price +
                 ", pages=" + pages +
                 ", isbn='" + isbn + '\'' +
+                ", cover=" + cover +
                 '}';
     }
 }
