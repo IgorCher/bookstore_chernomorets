@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
-    private final String URL = DatabaseProperties.getUrl();
+    private static final String URL = DatabaseProperties.getUrl();
     private static final String LOGIN = DatabaseProperties.getLogin();
     private static final String PASSWORD = DatabaseProperties.getPassword();
 
@@ -144,7 +144,6 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public long countAll() {
-        long count = 0;
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT);
@@ -155,7 +154,7 @@ public class BookDaoImpl implements BookDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return count;
+        return 0;
     }
 
     public static Book mapRow(ResultSet resultSet) throws SQLException {
