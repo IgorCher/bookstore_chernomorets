@@ -15,7 +15,6 @@ public class BookController {
         do{
             switch (input) {
                 case "all":
-                    System.out.println("hello");
                     List<BookDto> dtos = bookService.getAll();
                     dtos.forEach(System.out::println);
                     break label;
