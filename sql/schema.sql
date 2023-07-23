@@ -16,3 +16,20 @@ CREATE TABLE IF NOT EXISTS books
         isbn CHAR (13) UNIQUE NOT NULL,
         cover_type_id INT REFERENCES cover_types
     );
+
+    CREATE TABLE IF NOT EXISTS roles
+        (
+                id SERIAL PRIMARY KEY,
+                role VARCHAR (256)
+            );
+
+    CREATE TABLE IF NOT EXISTS users
+        (
+            id BIGSERIAL PRIMARY KEY,
+            "name" VARCHAR(256),
+            last_name VARCHAR (256),
+            email VARCHAR (256) NOT NULL,
+            "login" VARCHAR (256) NOT NULL,
+            "password" VARCHAR (256) NOT NULL,
+            role_id INT REFERENCES roles
+        );
