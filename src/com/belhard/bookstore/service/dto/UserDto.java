@@ -9,8 +9,8 @@ public class UserDto {
     private String email;
     private String login;
     private String password;
-    private Role role;
-    public enum Role{
+    private RoleDto roleDto;
+    public enum RoleDto{
         ADMIN,
         MANAGER,
         CUSTOMER
@@ -64,12 +64,12 @@ public class UserDto {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleDto getRoleDto() {
+        return roleDto;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleDto(RoleDto roleDto) {
+        this.roleDto = roleDto;
     }
 
     @Override
@@ -77,12 +77,12 @@ public class UserDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDto user = (UserDto) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && role == user.role;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && roleDto == user.roleDto;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, email, login, password, role);
+        return Objects.hash(id, name, lastName, email, login, password, roleDto);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class UserDto {
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role +
+                ", role=" + roleDto +
                 '}';
     }
 }
