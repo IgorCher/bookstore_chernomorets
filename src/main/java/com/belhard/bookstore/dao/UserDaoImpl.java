@@ -1,6 +1,8 @@
 package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,17 +21,21 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE = "UPDATE users SET name = ?, last_name = ?, email = ?, login = ?, password = ?, role_id = (SELECT id FROM roles WHERE role = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(u.id) FROM users u";
     private static final String DELETE = "DELETE FROM users WHERE id = ?";
+    public static Logger logger = LogManager.getLogger();
 
     @Override
     public User find(long id) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             if (resultSet.next()) {
                 return mapRow(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -39,12 +45,15 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            logger.debug("SQL query");
             while (resultSet.next()) {
                 users.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return users;
@@ -54,13 +63,16 @@ public class UserDaoImpl implements UserDao {
     public List<User> findByLastName(String lastName) {
         List<User> users = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LAST_NAME);
             preparedStatement.setString(1, lastName);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             while (resultSet.next()) {
                 users.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return users;
@@ -69,13 +81,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             if (resultSet.next()) {
                 return mapRow(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -84,6 +99,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User create(User user) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, user.getName());
@@ -94,7 +110,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(6, user.getRole().toString());
 
             preparedStatement.executeUpdate();
-
+            logger.debug("SQL query");
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -102,6 +118,7 @@ public class UserDaoImpl implements UserDao {
                 return find(id);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -110,6 +127,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(User user) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
 
             preparedStatement.setString(1, user.getName());
@@ -120,8 +138,10 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(6, user.getRole().toString());
 
             preparedStatement.executeUpdate();
+            logger.debug("SQL query");
 
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return user;
@@ -130,11 +150,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(long id) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setLong(1, id);
             int rows = preparedStatement.executeUpdate();
+            logger.debug("SQL query");
             return rows == 1;
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
     }
@@ -142,13 +165,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long countAll() {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT);
+            logger.debug("SQL query");
 
             if (resultSet.next()) {
                 return resultSet.getLong("count");
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return 0;

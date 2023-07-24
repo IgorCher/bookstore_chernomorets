@@ -4,14 +4,18 @@ import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.UserDaoImpl;
 import com.belhard.bookstore.dao.entity.User;
 import com.belhard.bookstore.service.dto.UserDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = new UserDaoImpl();
+    public static Logger logger = LogManager.getLogger();
 
     @Override
     public UserDto getById(long id) {
+        logger.debug("Service method running");
         User user = userDao.find(id);
         if (user == null) {
             throw new RuntimeException("User with id: " + id + "not found");
@@ -21,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAll() {
+        logger.debug("Service method running");
         return userDao.findAll()
                 .stream()
                 .map(this::toDto)
@@ -29,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
+        logger.debug("Service method running");
         if (userDto.getEmail() == null && userDto.getLogin() == null && userDto.getPassword() == null) {
             throw new RuntimeException("Invalid information");
         }
@@ -39,6 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
+        logger.debug("Service method running");
         if (userDto.getEmail() == null && userDto.getLogin() == null && userDto.getPassword() == null) {
             throw new RuntimeException("Invalid information");
         }
@@ -49,6 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(long id) {
+        logger.debug("Service method running");
         if (!userDao.delete(id)) {
             throw new RuntimeException("User with id: " + id + "not found");
         }

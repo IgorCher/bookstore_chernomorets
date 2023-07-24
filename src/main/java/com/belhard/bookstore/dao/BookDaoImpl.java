@@ -1,6 +1,8 @@
 package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.entity.Book;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,18 +21,22 @@ public class BookDaoImpl implements BookDao {
     private static final String UPDATE = "UPDATE books SET author = ?, title = ?, year = ?, price = ?, pages = ?, isbn = ?, cover_type_id = (SELECT id FROM cover_types WHERE cover_type = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(b.id) FROM books b";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
+    static Logger logger = LogManager.getLogger();
 
 
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            logger.debug("SQL query");
             while (resultSet.next()) {
                 books.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return books;
@@ -40,13 +46,16 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findByAuthor(String author) {
         List<Book> books = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_AUTHOR);
             preparedStatement.setString(1, author);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             while (resultSet.next()) {
                 books.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return books;
@@ -54,13 +63,16 @@ public class BookDaoImpl implements BookDao {
 
     public Book find(long id) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             if (resultSet.next()) {
                 return mapRow(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -69,13 +81,16 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book findByIsbn(String isbn) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ISBN);
             preparedStatement.setString(1, isbn);
             ResultSet resultSet = preparedStatement.executeQuery();
+            logger.debug("SQL query");
             if (resultSet.next()) {
                 return mapRow(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -84,6 +99,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book create(Book book) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, book.getAuthor());
@@ -95,7 +111,7 @@ public class BookDaoImpl implements BookDao {
             preparedStatement.setString(7, book.getCover().toString());
 
             preparedStatement.executeUpdate();
-
+            logger.debug("SQL query");
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -103,6 +119,7 @@ public class BookDaoImpl implements BookDao {
                 return find(id);
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return null;
@@ -111,6 +128,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book update(Book book) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
 
             preparedStatement.setString(1, book.getAuthor());
@@ -123,8 +141,10 @@ public class BookDaoImpl implements BookDao {
             preparedStatement.setLong(8, book.getId());
 
             preparedStatement.executeUpdate();
+            logger.debug("SQL query");
 
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return book;
@@ -133,11 +153,14 @@ public class BookDaoImpl implements BookDao {
     @Override
     public boolean delete(long id) {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setLong(1, id);
             int rows = preparedStatement.executeUpdate();
+            logger.debug("SQL query");
             return rows == 1;
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
     }
@@ -145,13 +168,15 @@ public class BookDaoImpl implements BookDao {
     @Override
     public long countAll() {
         try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+            logger.info("Connected");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT);
-
+            logger.debug("SQL query");
             if (resultSet.next()) {
                 return resultSet.getLong("count");
             }
         } catch (SQLException e) {
+            logger.error("connection failed");
             throw new RuntimeException(e);
         }
         return 0;

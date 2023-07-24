@@ -4,15 +4,19 @@ import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.BookDaoImpl;
 import com.belhard.bookstore.dao.entity.Book;
 import com.belhard.bookstore.service.dto.BookDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private final BookDao bookDao = new BookDaoImpl();
+    public static Logger logger = LogManager.getLogger();
 
 
     @Override
     public List<BookDto> getAll() {
+        logger.debug("Service method running");
         return bookDao.findAll()
                 .stream()
                 .map(this::toDto)
@@ -21,6 +25,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getById(long id) {
+        logger.debug("Service method running");
         Book book = bookDao.find(id);
         if (book == null) {
             throw new RuntimeException("Book with id:" + id + "not found");
@@ -31,6 +36,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto create(BookDto bookDto) {
+        logger.debug("Service method running");
         if (bookDto.getIsbn() == null) {
             throw new RuntimeException();
         }
@@ -41,6 +47,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(BookDto bookDto) {
+        logger.debug("Service method running");
         if (bookDto.getIsbn() == null) {
             throw new RuntimeException();
         }
@@ -51,6 +58,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(long id) {
+        logger.debug("Service method running");
         if (!bookDao.delete(id)) {
             throw new RuntimeException("Not found book with id: " + id);
         }
