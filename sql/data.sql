@@ -29,3 +29,30 @@ VALUES ('Shakespeare', 'Romeo and Juliet','1911', 10.20, 1510,'9781257800041', (
 		('Kafka', 'Metamorphosis','1964', 31.60, 1211,'9781257895441', (SELECT id FROM cover_types WHERE cover_type = 'HARD')),
 		('Dostoyevsky', 'The Brothers Karamazov','1920', 20.50, 500,'9781257195441', (SELECT id FROM cover_types WHERE cover_type = 'HARD')),
 		('Homer', 'The Iliad ','925', 16.55, 419,'9781257825441', (SELECT id FROM cover_types WHERE cover_type = 'HARD'));
+
+		INSERT INTO roles(role)
+        VALUES ('ADMIN'),
+                ('MANAGER'),
+                ('CUSTOMER');
+
+		INSERT INTO users ("name", last_name, email, "login", "password", role_id)
+		VALUES ('Ivan', 'Popov', 'popov@gmail.com', 'ipopov', 'qwerty123',(SELECT id FROM roles WHERE role = 'ADMIN')),
+		('Elon', 'Musk', 'musk@gmail.com', 'emusk', 'qazwsxedc741',(SELECT id FROM roles WHERE role = 'MANAGER')),
+		('Peter', 'Pan', 'pan@gmail.com', 'ppan', 'lkjhg987',(SELECT id FROM roles WHERE role = 'MANAGER')),
+		('Sam', 'Tarly', 'tarly@gmail.com', 'starly', 'qwerty258',(SELECT id FROM roles WHERE role = 'MANAGER')),
+		('John', 'Snow', 'snow@gmail.com', 'jsnow', '963qwerty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Fedor', 'Simmons', 'simmons@gmail.com', 'fsimmons', '987654321!',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Nick', 'Nocturnal', 'nocturnal@gmail.com', 'nnocturnal', 'asdfg456',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Mike', 'Wazowski', 'wazowski@gmail.com', 'mwazowski', '321qwerty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Duncan', 'McLoud', 'mcloud@gmail.com', 'dmcloud', 'wqerty123',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Jack', 'Sparrow', 'sparrow@gmail.com', 'jsparrow', 'ytrewq321',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Rick', 'Martin', 'martin@gmail.com', 'rmartin', '000qwerty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Tom', 'Hardy', 'hardy@gmail.com', 'thardy', 'qw321erty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Harry', 'Potter', 'potter@gmail.com', 'hpotter', '1qwe1rty1',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Bill', 'Murray', 'murray@gmail.com', 'bmurray', '321qwerty13',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Ned', 'Stark', 'stark@gmail.com', 'nstark', 'qwerty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Alex', 'Smirnov', 'smirnov@gmail.com', 'asmirnov', '!qwerty321',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Simon', 'Tompson', 'tompson@gmail.com', 'stompson', '321@qwerty',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Bred', 'Pitt', 'pitt@gmail.com', 'bpitt', 'qwerty123',(SELECT id FROM roles WHERE role = 'CUSTOMER')),
+		('Richard', 'Hammond', 'hammond@gmail.com', 'rhammond', 'qwe654rty',(SELECT id FROM roles WHERE role = 'ADMIN')),
+		('James', 'Bond', 'bond@gmail.com', 'jbond', 'qwertymnbvc',(SELECT id FROM roles WHERE role = 'ADMIN'));
