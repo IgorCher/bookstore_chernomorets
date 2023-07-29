@@ -3,66 +3,30 @@ package com.belhard.bookstore.dao;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class DatabaseProperties {
-    private static String url;
-    private static String login;
-    private static String password;
+    private static Properties properties;
 
-    public static String getUrl() {
-        try (BufferedReader br = new BufferedReader(new FileReader("database.properties"))) {
-            List<String> properties = new ArrayList<>();
-            String s;
-            while ((s = br.readLine()) != null) {
-                properties.add(s);
-            }
-            url = properties.get(0);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return url;
+       static {
+           properties = new Properties();
+           try (InputStream in = DatabaseProperties.class.getClassLoader().getResourceAsStream("database.properties")){
+               properties.load(in);
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       }
+
+    public static String getUrl (){
+        return properties.getProperty("db.url");
     }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public static String getLogin (){
+        return properties.getProperty("db.login");
     }
-
-    public static String getLogin() {
-        try (BufferedReader br = new BufferedReader(new FileReader("database.properties"))) {
-            List<String> properties = new ArrayList<>();
-            String s;
-            while ((s = br.readLine()) != null) {
-                properties.add(s);
-            }
-            login = properties.get(1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return login;
+    public static String getPassword (){
+        return properties.getProperty("db.password");
     }
-
-    public void setUser(String user) {
-        this.login = user;
-    }
-
-    public static String getPassword() {
-        try (BufferedReader br = new BufferedReader(new FileReader("database.properties"))) {
-            List<String> properties = new ArrayList<>();
-            String s;
-            while ((s = br.readLine()) != null) {
-                properties.add(s);
-            }
-            password = properties.get(2);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 }
