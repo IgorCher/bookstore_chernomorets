@@ -1,16 +1,20 @@
 package com.belhard.bookstore.service;
 
+import com.belhard.bookstore.connection.ConnectionManager;
+import com.belhard.bookstore.connection.impl.ConnectionManagerImpl;
 import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.BookDaoImpl;
 import com.belhard.bookstore.dao.entity.Book;
 import com.belhard.bookstore.service.dto.BookDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
 @Log4j2
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao = new BookDaoImpl();
+    private final BookDao bookDao;
 
     @Override
     public List<BookDto> getAll() {

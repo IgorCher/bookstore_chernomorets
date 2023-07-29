@@ -4,13 +4,15 @@ import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.UserDaoImpl;
 import com.belhard.bookstore.dao.entity.User;
 import com.belhard.bookstore.service.dto.UserDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
 @Log4j2
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = new UserDaoImpl();
+    private final UserDao userDao;
 
     @Override
     public UserDto getById(long id) {

@@ -1,5 +1,10 @@
 package com.belhard.bookstore.controller;
 
+import com.belhard.bookstore.connection.ConnectionManager;
+import com.belhard.bookstore.connection.impl.ConnectionManagerImpl;
+import com.belhard.bookstore.dao.BookDaoImpl;
+import com.belhard.bookstore.platform.ConfigurationManager;
+import com.belhard.bookstore.platform.impl.ConfigurationManagerImpl;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.BookServiceImpl;
 import com.belhard.bookstore.service.dto.BookDto;
@@ -8,11 +13,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookController {
-    private final BookService bookService = new BookServiceImpl();
+    private static final ConfigurationManager configurationManager = new ConfigurationManagerImpl();
+    private static final String URL = configurationManager.getProperty("db.url");
+    private static final String LOGIN = configurationManager.getProperty("db.login");
+    private static final String PASSWORD = configurationManager.getProperty("db.password");
+    private final ConnectionManager connectionManager = new ConnectionManagerImpl(URL, LOGIN, PASSWORD);
+    private final BookService bookService = new BookServiceImpl(new BookDaoImpl(connectionManager));
 
     public void process(String input) {
         label:
-        do{
+        do {
             switch (input) {
                 case "all":
                     List<BookDto> dtos = bookService.getAll();
