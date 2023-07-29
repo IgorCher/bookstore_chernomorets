@@ -1,7 +1,8 @@
-package com.belhard.bookstore.dao;
+package com.belhard.bookstore.data.dao.impl;
 
-import com.belhard.bookstore.connection.ConnectionManager;
-import com.belhard.bookstore.dao.entity.User;
+import com.belhard.bookstore.data.connection.ConnectionManager;
+import com.belhard.bookstore.data.dao.UserDao;
+import com.belhard.bookstore.data.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

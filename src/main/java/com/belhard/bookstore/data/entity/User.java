@@ -1,4 +1,4 @@
-package com.belhard.bookstore.dao.entity;
+package com.belhard.bookstore.data.entity;
 
 import lombok.Data;
 

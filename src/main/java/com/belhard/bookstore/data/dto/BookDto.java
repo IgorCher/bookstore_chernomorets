@@ -1,6 +1,4 @@
-package com.belhard.bookstore.service.dto;
-
-import com.belhard.bookstore.dao.entity.Book;
+package com.belhard.bookstore.data.dto;
 
 import java.util.Objects;
 

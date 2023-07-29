@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.belhard</groupId>
-    <artifactId>bookstore_chernomorets</artifactId>
+    <artifactId>bookstore</artifactId>
     <version>0.1</version>
     <packaging>war</packaging>
 
@@ -51,6 +51,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+                <configuration>
+                    <webappDirectory>${CATALINA_HOME}\webapps\bookstore</webappDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
