@@ -11,11 +11,11 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = new UserDaoImpl();
-    public static Logger logger = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
     public UserDto getById(long id) {
-        logger.debug("Service method running");
+        log.debug("Service method running");
         User user = userDao.find(id);
         if (user == null) {
             throw new RuntimeException("User with id: " + id + "not found");
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAll() {
-        logger.debug("Service method running");
+        log.debug("Service method running");
         return userDao.findAll()
                 .stream()
                 .map(this::toDto)
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
-        logger.debug("Service method running");
+        log.debug("Service method running");
         if (userDto.getEmail() == null && userDto.getLogin() == null && userDto.getPassword() == null) {
             throw new RuntimeException("Invalid information");
         }
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
-        logger.debug("Service method running");
+        log.debug("Service method running");
         if (userDto.getEmail() == null && userDto.getLogin() == null && userDto.getPassword() == null) {
             throw new RuntimeException("Invalid information");
         }
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(long id) {
-        logger.debug("Service method running");
+        log.debug("Service method running");
         if (!userDao.delete(id)) {
             throw new RuntimeException("User with id: " + id + "not found");
         }
