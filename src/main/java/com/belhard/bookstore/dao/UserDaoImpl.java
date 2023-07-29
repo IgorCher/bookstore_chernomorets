@@ -1,13 +1,13 @@
 package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.entity.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 public class UserDaoImpl implements UserDao {
 
     private static final String URL = DatabaseProperties.getUrl();
@@ -21,7 +21,6 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE = "UPDATE users SET name = ?, last_name = ?, email = ?, login = ?, password = ?, role_id = (SELECT id FROM roles WHERE role = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(u.id) FROM users u";
     private static final String DELETE = "DELETE FROM users WHERE id = ?";
-    private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
 
     @Override
     public User find(long id) {

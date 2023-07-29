@@ -1,13 +1,13 @@
 package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.entity.Book;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 public class BookDaoImpl implements BookDao {
     private static final String URL = DatabaseProperties.getUrl();
     private static final String LOGIN = DatabaseProperties.getLogin();
@@ -21,9 +21,6 @@ public class BookDaoImpl implements BookDao {
     private static final String UPDATE = "UPDATE books SET author = ?, title = ?, year = ?, price = ?, pages = ?, isbn = ?, cover_type_id = (SELECT id FROM cover_types WHERE cover_type = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(b.id) FROM books b";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
-    private static final Logger log = LogManager.getLogger(BookDaoImpl.class);
-
-
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
