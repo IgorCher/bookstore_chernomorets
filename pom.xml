@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.belhard</groupId>
-    <artifactId>bookstore</artifactId>
+    <artifactId>bookstore_chernomorets</artifactId>
     <version>0.1</version>
     <packaging>war</packaging>
 
@@ -39,6 +39,17 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>3.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -52,7 +63,8 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
                 <configuration>
-                    <webappDirectory>${CATALINA_HOME}\webapps\bookstore</webappDirectory>
+                    <warName>bookstore</warName>
+                    <outputDirectory>${env.CATALINA_HOME}/webapps</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
