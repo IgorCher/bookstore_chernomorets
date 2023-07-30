@@ -1,8 +1,8 @@
-package com.belhard.bookstore.dao.entity;
+package com.belhard.bookstore.data.dto;
 
 import java.util.Objects;
 
-public class Book {
+public class BookDto {
 
     private long id;
     private String title;
@@ -11,10 +11,9 @@ public class Book {
     private double price;
     private int pages;
     private String isbn;
+    private CoverDto coverDto;
 
-    private Cover cover;
-
-    public enum Cover{
+    public enum CoverDto {
         HARD,
         SOFT,
         OTHER
@@ -28,12 +27,12 @@ public class Book {
         this.price = price;
     }
 
-    public Cover getCover() {
-        return cover;
+    public CoverDto getCoverDto() {
+        return coverDto;
     }
 
-    public void setCover(Cover cover) {
-        this.cover = cover;
+    public void setCoverDto(CoverDto coverDto) {
+        this.coverDto = coverDto;
     }
 
     public String getAuthor() {
@@ -88,7 +87,7 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
+        BookDto book = (BookDto) o;
         return pages == book.pages && Objects.equals(author, book.author) && Objects.equals(isbn, book.isbn) && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(year, book.year);
     }
 
@@ -99,7 +98,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "BookDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
@@ -107,7 +106,7 @@ public class Book {
                 ", price=" + price +
                 ", pages=" + pages +
                 ", isbn='" + isbn + '\'' +
-                ", cover=" + cover +
+                ", coverDto=" + coverDto +
                 '}';
     }
 }

@@ -1,18 +1,18 @@
-package com.belhard.bookstore.service;
+package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.dao.BookDao;
-import com.belhard.bookstore.dao.BookDaoImpl;
-import com.belhard.bookstore.dao.entity.Book;
-import com.belhard.bookstore.service.dto.BookDto;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.belhard.bookstore.data.dao.BookDao;
+import com.belhard.bookstore.data.entity.Book;
+import com.belhard.bookstore.data.dto.BookDto;
+import com.belhard.bookstore.service.BookService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
+@Log4j2
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao = new BookDaoImpl();
-    private static final Logger log = LogManager.getLogger(BookServiceImpl.class);
-
+    private final BookDao bookDao;
 
     @Override
     public List<BookDto> getAll() {

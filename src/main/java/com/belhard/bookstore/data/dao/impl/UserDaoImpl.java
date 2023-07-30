@@ -1,18 +1,18 @@
-package com.belhard.bookstore.dao;
+package com.belhard.bookstore.data.dao.impl;
 
-import com.belhard.bookstore.dao.entity.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.belhard.bookstore.data.connection.ConnectionManager;
+import com.belhard.bookstore.data.dao.UserDao;
+import com.belhard.bookstore.data.entity.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
+@RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
-
-    private static final String URL = DatabaseProperties.getUrl();
-    private static final String LOGIN = DatabaseProperties.getLogin();
-    private static final String PASSWORD = DatabaseProperties.getPassword();
     private static final String FIND_BY_ID = "SELECT u.id, u.name, u.last_name, u.email, login, password, r.role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ?";
     private static final String FIND_ALL = "SELECT u.id, u.name, u.last_name, u.email, login, password, r.role FROM users u JOIN roles r ON u.role_id = r.id";
     private static final String FIND_BY_LAST_NAME = "SELECT u.id, u.name, u.last_name, u.email, login, password, r.role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.last_name = ?";
@@ -21,11 +21,11 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE = "UPDATE users SET name = ?, last_name = ?, email = ?, login = ?, password = ?, role_id = (SELECT id FROM roles WHERE role = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(u.id) FROM users u";
     private static final String DELETE = "DELETE FROM users WHERE id = ?";
-    private static final Logger log = LogManager.getLogger(UserDaoImpl.class);
+    private final ConnectionManager connectionManager;
 
     @Override
     public User find(long id) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setLong(1, id);
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findByLastName(String lastName) {
         List<User> users = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LAST_NAME);
             preparedStatement.setString(1, lastName);
@@ -80,7 +80,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_EMAIL);
             preparedStatement.setString(1, email);
@@ -98,7 +98,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
@@ -126,7 +126,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
 
@@ -149,7 +149,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(long id) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setLong(1, id);
@@ -164,7 +164,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public long countAll() {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT);

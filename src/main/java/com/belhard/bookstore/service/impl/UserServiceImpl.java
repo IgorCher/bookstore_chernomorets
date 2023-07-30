@@ -1,17 +1,18 @@
-package com.belhard.bookstore.service;
+package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.dao.UserDao;
-import com.belhard.bookstore.dao.UserDaoImpl;
-import com.belhard.bookstore.dao.entity.User;
-import com.belhard.bookstore.service.dto.UserDto;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.belhard.bookstore.data.dao.UserDao;
+import com.belhard.bookstore.data.entity.User;
+import com.belhard.bookstore.data.dto.UserDto;
+import com.belhard.bookstore.service.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
+@Log4j2
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = new UserDaoImpl();
-    private static final Logger log = LogManager.getLogger(UserServiceImpl.class);
+    private final UserDao userDao;
 
     @Override
     public UserDto getById(long id) {

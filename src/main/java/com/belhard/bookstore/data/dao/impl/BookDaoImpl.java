@@ -1,18 +1,18 @@
-package com.belhard.bookstore.dao;
+package com.belhard.bookstore.data.dao.impl;
 
-import com.belhard.bookstore.dao.entity.Book;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.belhard.bookstore.data.connection.ConnectionManager;
+import com.belhard.bookstore.data.dao.BookDao;
+import com.belhard.bookstore.data.entity.Book;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
+@RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
-    private static final String URL = DatabaseProperties.getUrl();
-    private static final String LOGIN = DatabaseProperties.getLogin();
-    private static final String PASSWORD = DatabaseProperties.getPassword();
-
     private static final String FIND_ALL = "SELECT b.id, b.author, b.title, b.year, b.price, b.pages, b.isbn, c.cover_type FROM books b JOIN cover_types c ON b.cover_type_id = c.id";
     private static final String FIND_BY_ID = "SELECT b.id, b.author, b.title, b.year, b.price, b.pages, b.isbn, c.cover_type FROM books b JOIN cover_types c ON b.cover_type_id = c.id WHERE b.id = ?";
     private static final String FIND_BY_AUTHOR = "SELECT b.id, b.author, b.title, b.year, b.price, b.pages, b.isbn, c.cover_type FROM books b JOIN cover_types c ON b.cover_type_id = c.id WHERE b.author = ?";
@@ -21,13 +21,12 @@ public class BookDaoImpl implements BookDao {
     private static final String UPDATE = "UPDATE books SET author = ?, title = ?, year = ?, price = ?, pages = ?, isbn = ?, cover_type_id = (SELECT id FROM cover_types WHERE cover_type = ?) WHERE id = ?";
     private static final String COUNT = "SELECT COUNT(b.id) FROM books b";
     private static final String DELETE = "DELETE FROM books WHERE id = ?";
-    private static final Logger log = LogManager.getLogger(BookDaoImpl.class);
-
+    private final ConnectionManager connectionManager;
 
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()){
             log.info("Connected to database");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
@@ -44,7 +43,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> findByAuthor(String author) {
         List<Book> books = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_AUTHOR);
             preparedStatement.setString(1, author);
@@ -61,7 +60,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     public Book find(long id) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setLong(1, id);
@@ -79,7 +78,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book findByIsbn(String isbn) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ISBN);
             preparedStatement.setString(1, isbn);
@@ -97,7 +96,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book create(Book book) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
@@ -126,7 +125,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book update(Book book) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
 
@@ -151,7 +150,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public boolean delete(long id) {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE);
             preparedStatement.setLong(1, id);
@@ -166,7 +165,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public long countAll() {
-        try (Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
+        try (Connection connection = connectionManager.getConnection()) {
             log.info("Connected to database");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT);

@@ -1,16 +1,16 @@
-package com.belhard.bookstore.dao.entity;
+package com.belhard.bookstore.data.dto;
 
 import java.util.Objects;
 
-public class User {
+public class UserDto {
     private long id;
     private String name;
     private String lastName;
     private String email;
     private String login;
     private String password;
-    private Role role;
-    public enum Role{
+    private RoleDto roleDto;
+    public enum RoleDto{
         ADMIN,
         MANAGER,
         CUSTOMER
@@ -64,25 +64,25 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleDto getRoleDto() {
+        return roleDto;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleDto(RoleDto roleDto) {
+        this.roleDto = roleDto;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && role == user.role;
+        UserDto user = (UserDto) o;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && roleDto == user.roleDto;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, email, login, password, role);
+        return Objects.hash(id, name, lastName, email, login, password, roleDto);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role +
+                ", role=" + roleDto +
                 '}';
     }
 }
