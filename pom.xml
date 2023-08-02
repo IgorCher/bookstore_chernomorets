@@ -12,7 +12,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sql.version>42.6.0</sql.version>
         <log4j.version>2.20.0</log4j.version>
-        <servlet.version>6.0.0</servlet.version>
+        <servlet.version>5.0.0</servlet.version>
+        <jsp.version>3.0.0</jsp.version>
+        <jstl.version>2.0.0</jstl.version>
         <lombok.version>1.18.28</lombok.version>
     </properties>
 
@@ -41,13 +43,13 @@
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
-            <version>3.1.1</version>
+            <version>${jsp.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>${jstl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -11,12 +11,14 @@
     <th>Id</th>
     <th>Email</th>
     <th>Name</th>
+    <th>Last Name</th>
 <tr>
 <c:forEach items="${users}" var="user" varStatus="counter">
     <tr>
         <td>${counter.count}</td>
         <td>${user.id}</td>
-        <td>${user.email}</td>
+        <td><a href ="controller?command=user&id=${user.id}">${user.email}</a></td>
+        <td>${user.name}</td>
         <td>${user.lastName}</td>
     </tr>
 </c:forEach>

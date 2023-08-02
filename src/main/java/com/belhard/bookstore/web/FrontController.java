@@ -20,7 +20,7 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.warn("DoGet called");
+        log.info("DoGet called");
         String command = req.getParameter("command");
         Controller controller = ControllerFactory.INSTANCE.getController(command);
         String page;
@@ -36,7 +36,6 @@ public class FrontController extends HttpServlet {
 
     @Override
     public void destroy() {
-        ControllerFactory.INSTANCE.close();
         log.warn("Servlet destroyed");
     }
 }
