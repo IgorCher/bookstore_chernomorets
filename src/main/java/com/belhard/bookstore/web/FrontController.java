@@ -20,16 +20,17 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("DoGet called");
         process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("DoPost called");
         process(req, resp);
     }
 
     private static void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("DoGet called");
         String command = req.getParameter("command");
         Controller controller = ControllerFactory.INSTANCE.getController(command);
         String page;
