@@ -12,6 +12,13 @@
     <p>ISBN: ${book.isbn}</p>
     <br />
     <p>
+      <form method="post" action="controller">
+        <input type="hidden" name="command" value="delete_book"/>
+        <input type="hidden" name="id" value="${book.id}"/>
+        <input type="submit"  value="Delete"/>
+      </form>
+    </p>
+    <p>
       <a href="controller?command=books">
         <button>Back to all books</button>
       </a>
