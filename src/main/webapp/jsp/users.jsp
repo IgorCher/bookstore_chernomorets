@@ -5,6 +5,7 @@
     <title>Users</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>All Users</h1>
     <table>
       <tr>

@@ -4,6 +4,7 @@
     <title>User</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>User: ${user.id}</h1>
     <p>Name: ${user.name} ${user.lastName}</p>
     <p>Login: ${user.login}</p>
@@ -17,7 +18,6 @@
         <input type="submit"  value="Delete"/>
       </form>
     </p>
-    <br />
     <p>
       <a href="controller?command=users">
         <button>Back to all users</button>

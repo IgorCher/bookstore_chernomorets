@@ -44,6 +44,7 @@ public class ControllerFactory implements Closeable {
         BookDao bookDao = new BookDaoImpl(connectionManager);
         BookService bookService = new BookServiceImpl(bookDao);
 
+        controllers.put("home",new HomeController());
         controllers.put("user", new UserController(userService));
         controllers.put("users", new UsersController(userService));
         controllers.put("book", new BookController(bookService));

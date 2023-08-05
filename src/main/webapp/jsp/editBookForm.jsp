@@ -6,6 +6,7 @@
     <title>Edit book</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>Edit book</h1>
     <form method="post" action="controller">
       <input name="command" type="hidden" value="edit_book" />

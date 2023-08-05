@@ -4,6 +4,7 @@
     <title>Book</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>Book: ${book.id}</h1>
     <p>Title: ${book.title}</p>
     <p>Author: ${book.author}</p>

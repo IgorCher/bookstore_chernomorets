@@ -6,6 +6,7 @@
     <title>Edit user</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>Edit user</h1>
     <form method="post" action="controller">
       <input name="command" type="hidden" value="edit_user" />

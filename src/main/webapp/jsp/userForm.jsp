@@ -5,6 +5,7 @@
     <title>Create user</title>
   </head>
   <body>
+    <jsp:include page="navbar.jsp" />
     <h1>Create new user</h1>
     <form method="post" action="controller">
       <input name="command" type="hidden" value="create_user" />
