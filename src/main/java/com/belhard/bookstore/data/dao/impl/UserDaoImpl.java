@@ -136,6 +136,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(4, user.getLogin());
             preparedStatement.setString(5, user.getPassword());
             preparedStatement.setString(6, user.getRole().toString());
+            preparedStatement.setLong(7, user.getId());
 
             preparedStatement.executeUpdate();
             log.debug("SQL query");
