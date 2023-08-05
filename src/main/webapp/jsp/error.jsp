@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Error</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Something went wrong...</h1>
-</body>
+  </body>
 </html>

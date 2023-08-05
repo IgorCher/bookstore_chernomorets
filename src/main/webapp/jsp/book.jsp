@@ -1,13 +1,20 @@
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Book</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Book: ${book.id}</h1>
-    <h3>Title: ${book.title}</h2>
-    <h3>Author: ${book.author}</h2>
-    <h3>Publication date: ${book.year}</h2>
-    <h3>Price: ${book.price} euro</h2>
-    <h3>ISBN: ${book.isbn}</h2>
-</body>
+    <p>Title: ${book.title}</p>
+    <p>Author: ${book.author}</p>
+    <p>Publication date: ${book.year}</p>
+    <p>Price: ${book.price} euro</p>
+    <p>ISBN: ${book.isbn}</p>
+    <br />
+    <p>
+      <a href="controller?command=books">
+        <button>Back to all books</button>
+      </a>
+    </p>
+  </body>
 </html>
