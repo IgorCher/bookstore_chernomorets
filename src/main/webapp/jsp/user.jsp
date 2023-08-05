@@ -11,10 +11,17 @@
     <p>Role: ${user.roleDto}</p>
     <br />
     <p>
+      <form method="post" action="controller">
+        <input type="hidden" name="command" value="delete_user"/>
+        <input type="hidden" name="id" value="${user.id}"/>
+        <input type="submit"  value="Delete"/>
+      </form>
+    </p>
+    <br />
+    <p>
       <a href="controller?command=users">
         <button>Back to all users</button>
       </a>
     </p>
-    <p></p>
   </body>
 </html>

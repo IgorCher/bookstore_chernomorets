@@ -57,6 +57,7 @@ public class ControllerFactory implements Closeable {
         controllers.put("edit_user", new EditUser(userService));
         controllers.put("edit_book_form", new EditBookFormController(bookService));
         controllers.put("edit_book", new EditBook(bookService));
+        controllers.put("delete_user",new DeleteUserController(userService));
     }
 
     public Controller getController(String command) {
